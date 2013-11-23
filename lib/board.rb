@@ -1,20 +1,20 @@
 
 class Board
-  attr_accessor :spaces, :width
+  attr_accessor :rows, :width
 
   def initialize(width)
     self.width = width
-    self.spaces = []
+    self.rows = []
 
     width.times do |i|
-      self.spaces << Array.new(width, ' ')
+      self.rows << Array.new(width, ' ')
     end
   end
 
   def empty_spaces
     spac = []
 
-    self.spaces.flatten.each_with_index do |token, index|
+    self.rows.flatten.each_with_index do |token, index|
       if token == ' '
         spac << index
       end
@@ -26,13 +26,13 @@ class Board
   def place(index)
     row, column = coordinates_from index
 
-    self.spaces[row][column] = self.current_token
+    self.rows[row][column] = self.current_token
   end
 
   def token_at(index)
     row, column = coordinates_from index
 
-    self.spaces[row][column]
+    self.rows[row][column]
   end
 
   def current_token
@@ -42,7 +42,7 @@ class Board
   private
 
   def first_player_turn?
-    self.spaces.length % 2 == self.empty_spaces.length % 2
+    self.rows.length % 2 == self.empty_spaces.length % 2
   end
 
   def coordinates_from(index)

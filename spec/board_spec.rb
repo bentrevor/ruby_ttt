@@ -5,13 +5,13 @@ describe Board do
   let (:board_4x4) { Board.new 4 }
 
   it "is constructed with a size" do
-    board_3x3.spaces.length.should == 3
-    board_3x3.spaces.flatten.length.should == 9
-    board_4x4.spaces.length.should == 4
-    board_4x4.spaces.flatten.length.should == 16
+    board_3x3.rows.length.should == 3
+    board_3x3.rows.flatten.length.should == 9
+    board_4x4.rows.length.should == 4
+    board_4x4.rows.flatten.length.should == 16
 
-    board_3x3.spaces[0].should == [' ',' ',' ']
-    board_4x4.spaces[0].should == [' ',' ',' ',' ']
+    board_3x3.rows[0].should == [' ',' ',' ']
+    board_4x4.rows[0].should == [' ',' ',' ',' ']
   end
 
   it "can place a token" do
@@ -33,13 +33,13 @@ describe Board do
   end
 
   it "knows the empty spaces" do
-    board_3x3.spaces[0][2] = 'o'
-    board_3x3.spaces[2] = ['o','o','x']
+    board_3x3.rows[0][2] = 'o'
+    board_3x3.rows[2] = ['o','o','x']
 
     board_3x3.empty_spaces.should == [0,1,3,4,5]
 
-    board_4x4.spaces[0][2] = 'o'
-    board_4x4.spaces[2] = ['o','o','x','x']
+    board_4x4.rows[0][2] = 'o'
+    board_4x4.rows[2] = ['o','o','x','x']
 
     board_4x4.empty_spaces.should == [0,1,3,4,5,6,7,12,13,14,15]
   end
