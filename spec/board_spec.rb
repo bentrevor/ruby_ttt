@@ -6,9 +6,9 @@ describe Board do
 
   it "is constructed with a size" do
     board_3x3.rows.length.should == 3
-    board_3x3.rows.flatten.length.should == 9
+    board_3x3.spaces.length.should == 9
     board_4x4.rows.length.should == 4
-    board_4x4.rows.flatten.length.should == 16
+    board_4x4.spaces.length.should == 16
 
     board_3x3.rows[0].should == [' ',' ',' ']
     board_4x4.rows[0].should == [' ',' ',' ',' ']

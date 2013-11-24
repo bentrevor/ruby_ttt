@@ -1,13 +1,33 @@
-require 'board'
+require_relative 'board'
 
 class Game
-  attr_accessor :board
+  attr_accessor :board, :current_player, :other_player, :output
 
-  def initialize
-    self.board = Board.new 3
+  def initialize(board_size, output)
+    self.board = Board.new board_size
+    self.output = output
   end
 
-  def over?
+  def next_turn
+    move = current_player.get_move(self.board)
+    self.board.place move
+    output.show_board self.board
+    swap_players
+  end
+
+  def play
+    loop do
+      next_turn
+
+      break if game_over?
+    end
+  end
+
+  def swap_players
+    self.current_player, self.other_player = self.other_player, self.current_player
+  end
+
+  def game_over?
     self.board.empty_spaces.length == 0 or winner
   end
 

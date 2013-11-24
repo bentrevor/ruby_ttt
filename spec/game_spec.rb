@@ -1,26 +1,36 @@
+require 'spec_helper'
 require 'game'
+require 'console_output'
+require 'computer_player'
 
 describe Game do
+  let(:output) { ConsoleOutput.new($stdout) }
+  let(:game) { Game.new 3, output }
+  let(:player1) { ComputerPlayer.new(LowestAvailableIndex.new) }
+  let(:player2) { ComputerPlayer.new(LowestAvailableIndex.new) }
+
+  before :each do
+    game.current_player = player1
+    game.other_player = player2
+  end
+
   it "knows when a game is over" do
-    game = Game.new
-    game.should_not be_over
+    game.should_not be_game_over
 
     game.board.rows = [['x','x','x'],
                        ['o','o','x'],
                        ['x','o','o']]
 
-    game.should be_over
+    game.should be_game_over
 
     game.board.rows = [['x','x','x'],
                        ['o','o',' '],
                        ['x','o',' ']]
 
-    game.should be_over
+    game.should be_game_over
   end
 
   it "knows when someone wins a row" do
-    game = Game.new
-
     game.board.rows = [['x','x','x'],
                        ['o','o','x'],
                        ['x','o','o']]
@@ -35,8 +45,6 @@ describe Game do
   end
 
   it "knows when someone wins a column" do
-    game = Game.new
-
     game.board.rows = [['o','x','x'],
                        ['o','o','x'],
                        ['x','o','x']]
@@ -51,8 +59,6 @@ describe Game do
   end
 
   it "knows when someone wins a diagonal" do
-    game = Game.new
-
     game.board.rows = [['o','x','x'],
                        ['o','o','x'],
                        ['x','x','o']]
@@ -65,4 +71,42 @@ describe Game do
 
     game.winner.should == 'x'
   end
+
+  it "can swap the current player" do
+    game.swap_players
+
+    assert_players_were_swapped game, player1, player2
+  end
+
+  it "can play a single turn" do
+    game.next_turn
+    game.board.spaces[0].should == 'x'
+
+    assert_players_were_swapped game, player1, player2
+
+    game.next_turn
+    game.board.spaces[1].should == 'o'
+  end
+
+  it "prints the board every turn" do
+    game.next_turn
+
+    printed_board = game.output.printable_board game.board
+
+    game.output.writer.printed_strings.should include printed_board
+  end
+
+  it "can play a whole game" do
+    game.play
+
+    game.winner.should == 'x'
+  end
+
+  private
+
+  def assert_players_were_swapped(game, first_player, second_player)
+    game.current_player.should == second_player
+    game.other_player.should == first_player
+  end
+
 end

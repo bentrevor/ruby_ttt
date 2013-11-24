@@ -23,6 +23,10 @@ class Board
     spac
   end
 
+  def spaces
+    self.rows.flatten
+  end
+
   def place(index)
     row, column = coordinates_from index
 

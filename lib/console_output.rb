@@ -7,6 +7,9 @@ class ConsoleOutput
   end
 
   def show_board(board)
+    system 'clear'
+    writer.print(printable_legend board.width)
+    writer.print(instructions)
     writer.print(printable_board board)
   end
 
@@ -15,7 +18,7 @@ class ConsoleOutput
 
     printable_spaces = board.rows.map { |row| printable_row row }.join
 
-    printable_spaces
+    printable_spaces.chomp(spacer size) + "\n"
   end
 
   def spacer(size)
@@ -35,7 +38,7 @@ class ConsoleOutput
   end
 
   def printable_legend(size)
-    legend = ""
+    legend = "\nLegend:\n\n"
 
     (1..size * size).each do |index|
       legend << " " if index < 10
@@ -44,5 +47,9 @@ class ConsoleOutput
     end
 
     legend
+  end
+
+  def instructions
+    "\nInstructions: Input a number and press Enter.\n\n"
   end
 end

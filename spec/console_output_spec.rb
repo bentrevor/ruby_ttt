@@ -1,16 +1,17 @@
+require 'spec_helper'
 require 'console_output'
 
 describe ConsoleOutput do
-  let(:writer) { MockWriter.new }
+  let(:fake_writer) { MockWriter.new }
+  let(:output) { ConsoleOutput.new fake_writer }
+  let(:board_3x3) { Board.new 3 }
+  let(:board_4x4) { Board.new 4 }
 
   it "can print a board" do
-    output = ConsoleOutput.new(writer)
-    board_3x3 = Board.new 3
     board_3x3.rows = [[' ','o','x'],
                       ['o','x',' '],
                       [' ',' ',' ']]
 
-    board_4x4 = Board.new 4
     board_4x4.rows = [[' ','o','x','o'],
                       ['o','x',' ','x'],
                       [' ',' ',' ','o'],
@@ -35,8 +36,6 @@ describe ConsoleOutput do
   end
 
   it "can print a legend" do
-    output = ConsoleOutput.new(writer)
-
     printable_3x3_legend = output.printable_legend 3
     printable_4x4_legend = output.printable_legend 4
 
@@ -49,7 +48,17 @@ describe ConsoleOutput do
     printable_4x4_legend.should include " 9 10 11 12 \n"
     printable_4x4_legend.should include "13 14 15 16 \n"
   end
+
+  it "shows a legend and instructions with the board" do
+    board = board_3x3
+    printed_legend = output.printable_legend board.width
+    printed_board = output.printable_board board
+
+    output.show_board board
+
+    output.writer.printed_strings[0].should == printed_legend
+    output.writer.printed_strings[1].should == output.instructions
+    output.writer.printed_strings[2].should == printed_board
+  end
 end
 
-class MockWriter
-end

@@ -1,3 +1,4 @@
+require 'spec_helper'
 require 'console_input'
 
 describe ConsoleInput do
@@ -18,14 +19,6 @@ describe ConsoleInput do
     input = ConsoleInput.new(reader)
 
     input.get_int.should == 2
-  end
-end
-
-class MockReader
-  attr_accessor :inputs
-
-  def gets
-    self.inputs.shift
   end
 end
 
