@@ -7,7 +7,6 @@ class ConsoleOutput
   end
 
   def show_board(board)
-    system 'clear'
     writer.print(printable_legend board.width)
     writer.print(instructions)
     writer.print(printable_board board)
@@ -51,5 +50,9 @@ class ConsoleOutput
 
   def instructions
     "\nInstructions: Input a number and press Enter.\n\n"
+  end
+
+  def clear_screen
+    system 'clear'
   end
 end

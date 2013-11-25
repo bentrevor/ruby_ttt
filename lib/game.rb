@@ -11,6 +11,7 @@ class Game
   def next_turn
     move = current_player.get_move(self.board)
     self.board.place move
+    output.clear_screen
     output.show_board self.board
     swap_players
   end
@@ -21,6 +22,9 @@ class Game
 
       break if game_over?
     end
+  end
+
+  def init_players(menu_choice)
   end
 
   def swap_players

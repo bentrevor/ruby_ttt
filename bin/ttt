@@ -1,0 +1,35 @@
+$LOAD_PATH << File.expand_path('lib')
+
+require 'board'
+require 'game'
+require 'console_input'
+require 'console_output'
+require 'computer_player'
+require 'human_player'
+
+input = ConsoleInput.new $stdin
+output = ConsoleOutput.new $stdout
+
+puts %q[
+Welcome to tic-tac-toe.  Please enter a board size:
+
+]
+size = input.get_int
+
+puts %q[
+Please select the players:
+
+1) Human vs Human
+2) Human vs Computer
+3) Computer vs Human
+4) Computer vs Computer
+
+]
+
+menu_choice = input.get_int
+
+game = Game.new size, output
+game.init_players menu_choice
+
+game.play
+

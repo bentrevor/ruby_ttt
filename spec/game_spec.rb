@@ -4,7 +4,7 @@ require 'console_output'
 require 'computer_player'
 
 describe Game do
-  let(:output) { ConsoleOutput.new($stdout) }
+  let(:output) { ConsoleOutput.new(MockWriter.new) }
   let(:game) { Game.new 3, output }
   let(:player1) { ComputerPlayer.new(LowestAvailableIndex.new) }
   let(:player2) { ComputerPlayer.new(LowestAvailableIndex.new) }
@@ -12,6 +12,7 @@ describe Game do
   before :each do
     game.current_player = player1
     game.other_player = player2
+    output.stub :clear_screen
   end
 
   it "knows when a game is over" do
@@ -89,8 +90,9 @@ describe Game do
   end
 
   it "prints the board every turn" do
-    game.next_turn
+    output.should_receive :clear_screen
 
+    game.next_turn
     printed_board = game.output.printable_board game.board
 
     game.output.writer.printed_strings.should include printed_board
