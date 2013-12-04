@@ -5,7 +5,8 @@ require 'computer_player'
 
 describe Game do
   let(:output) { ConsoleOutput.new(MockWriter.new) }
-  let(:game) { Game.new 3, output }
+  let(:input) { ConsoleInput.new(MockReader.new) }
+  let(:game) { Game.new(3, output, Menu.new(input)) }
   let(:player1) { ComputerPlayer.new(LowestAvailableIndex.new) }
   let(:player2) { ComputerPlayer.new(LowestAvailableIndex.new) }
 
@@ -99,9 +100,25 @@ describe Game do
   end
 
   it "can play a whole game" do
+    game.current_player = ComputerPlayer.new LowestAvailableIndex.new
+    game.other_player = ComputerPlayer.new HighestAvailableIndex.new
+
     game.play
 
     game.winner.should == 'x'
+  end
+
+  it "uses a menu to choose the players" do
+    fake_reader = MockReader.new
+    fake_reader.inputs = ["1\n"]
+    input = ConsoleInput.new fake_reader
+    menu = Menu.new input
+    game = Game.new 3, output, menu
+
+    game.init_players
+
+    game.current_player.class.should == HumanPlayer
+    game.other_player.class.should == HumanPlayer
   end
 
   private

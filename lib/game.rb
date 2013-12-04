@@ -1,11 +1,12 @@
 require_relative 'board'
 
 class Game
-  attr_accessor :board, :current_player, :other_player, :output
+  attr_accessor :board, :current_player, :other_player, :output, :menu
 
-  def initialize(board_size, output)
+  def initialize(board_size, output, menu)
     self.board = Board.new board_size
     self.output = output
+    self.menu = menu
   end
 
   def next_turn
@@ -24,7 +25,10 @@ class Game
     end
   end
 
-  def init_players(menu_choice)
+  def init_players
+    players = self.menu.choose_players_from_menu_choice
+    self.current_player = players[0]
+    self.other_player = players[1]
   end
 
   def swap_players

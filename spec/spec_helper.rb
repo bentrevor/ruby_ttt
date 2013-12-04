@@ -23,3 +23,9 @@ class LowestAvailableIndex
     board.empty_spaces.first
   end
 end
+
+class HighestAvailableIndex
+  def next_move(board)
+    board.empty_spaces.last
+  end
+end
