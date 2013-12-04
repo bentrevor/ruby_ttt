@@ -3,7 +3,7 @@ require_relative 'board'
 class Game
   attr_accessor :board, :current_player, :other_player, :output, :menu
 
-  def initialize(board_size, output, menu)
+  def initialize(board_size=3, output, menu)
     self.board = Board.new board_size
     self.output = output
     self.menu = menu

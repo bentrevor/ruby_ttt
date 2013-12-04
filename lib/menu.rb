@@ -12,11 +12,11 @@ class Menu
       when 1
         [HumanPlayer.new(self.input), HumanPlayer.new(self.input)]
       when 2
-        [HumanPlayer.new(self.input), ComputerPlayer.new("Minimax")]
+        [HumanPlayer.new(self.input), ComputerPlayer.new(HighestAvailableIndex)]
       when 3
-        [ComputerPlayer.new("Minimax"), HumanPlayer.new(self.input)]
+        [ComputerPlayer.new(HighestAvailableIndex), HumanPlayer.new(self.input)]
       when 4
-        [ComputerPlayer.new("Minimax"), ComputerPlayer.new("Minimax")]
+        [ComputerPlayer.new(HighestAvailableIndex), ComputerPlayer.new(HighestAvailableIndex)]
       end
   end
 end

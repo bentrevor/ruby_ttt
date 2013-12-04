@@ -19,13 +19,13 @@ class MockReader
 end
 
 class LowestAvailableIndex
-  def next_move(board)
+  def self.next_move(board)
     board.empty_spaces.first
   end
 end
 
 class HighestAvailableIndex
-  def next_move(board)
+  def self.next_move(board)
     board.empty_spaces.last
   end
 end

@@ -6,9 +6,9 @@ require 'computer_player'
 describe Game do
   let(:output) { ConsoleOutput.new(MockWriter.new) }
   let(:input) { ConsoleInput.new(MockReader.new) }
-  let(:game) { Game.new(3, output, Menu.new(input)) }
-  let(:player1) { ComputerPlayer.new(LowestAvailableIndex.new) }
-  let(:player2) { ComputerPlayer.new(LowestAvailableIndex.new) }
+  let(:game) { Game.new(output, Menu.new(input)) }
+  let(:player1) { ComputerPlayer.new(LowestAvailableIndex) }
+  let(:player2) { ComputerPlayer.new(LowestAvailableIndex) }
 
   before :each do
     game.current_player = player1
@@ -100,8 +100,8 @@ describe Game do
   end
 
   it "can play a whole game" do
-    game.current_player = ComputerPlayer.new LowestAvailableIndex.new
-    game.other_player = ComputerPlayer.new HighestAvailableIndex.new
+    game.current_player = ComputerPlayer.new LowestAvailableIndex
+    game.other_player = ComputerPlayer.new HighestAvailableIndex
 
     game.play
 
@@ -113,7 +113,7 @@ describe Game do
     fake_reader.inputs = ["1\n"]
     input = ConsoleInput.new fake_reader
     menu = Menu.new input
-    game = Game.new 3, output, menu
+    game = Game.new output, menu
 
     game.init_players
 
